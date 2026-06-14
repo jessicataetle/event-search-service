@@ -1,10 +1,10 @@
 package com.ticketmaster.eventdiscovery.model;
 
+import com.ticketmaster.eventdiscovery.constant.ApiFieldConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
@@ -12,61 +12,57 @@ public class Event {
     private String name;
     private String type;
     private LocalDate date;
-    private LocalTime time;
     private String url;
     private Classification classification;
     private Venue venue;
 
-    @JsonProperty("dates")
+    @JsonProperty(ApiFieldConstants.DATES)
     private void setDates(JsonNode dates) {
-        if (dates != null && dates.has("start")) {
-            JsonNode start = dates.get("start");
-            if (start.has("localDate")) {
-                this.date = LocalDate.parse(start.get("localDate").asText());
-            }
-            if (start.has("localTime")) {
-                this.time = LocalTime.parse(start.get("localTime").asText());
+        if (dates != null && dates.has(ApiFieldConstants.START)) {
+            JsonNode start = dates.get(ApiFieldConstants.START);
+            if (start.has(ApiFieldConstants.LOCAL_DATE)) {
+                this.date = LocalDate.parse(start.get(ApiFieldConstants.LOCAL_DATE).asText());
             }
         }
     }
 
-    @JsonProperty("classifications")
+    @JsonProperty(ApiFieldConstants.CLASSIFICATIONS)
     private void setClassifications(JsonNode[] classifications) {
         if (classifications != null && classifications.length > 0) {
             this.classification = new Classification();
             JsonNode firstClassification = classifications[0];
-            if (firstClassification.has("genre")) {
+            if (firstClassification.has(ApiFieldConstants.GENRE)) {
                 Genre genre = new Genre();
-                genre.setId(firstClassification.get("genre").get("id").asText());
-                genre.setName(firstClassification.get("genre").get("name").asText());
+                genre.setId(firstClassification.get(ApiFieldConstants.GENRE).get(ApiFieldConstants.ID).asText());
+                genre.setName(firstClassification.get(ApiFieldConstants.GENRE).get(ApiFieldConstants.NAME).asText());
                 this.classification.setGenre(genre);
             }
-            if (firstClassification.has("subGenre")) {
+            if (firstClassification.has(ApiFieldConstants.SUB_GENRE)) {
                 SubGenre subGenre = new SubGenre();
-                subGenre.setId(firstClassification.get("subGenre").get("id").asText());
-                subGenre.setName(firstClassification.get("subGenre").get("name").asText());
+                subGenre.setId(firstClassification.get(ApiFieldConstants.SUB_GENRE).get(ApiFieldConstants.ID).asText());
+                subGenre.setName(firstClassification.get(ApiFieldConstants.SUB_GENRE).get(ApiFieldConstants.NAME).asText());
                 this.classification.setSubGenre(subGenre);
             }
         }
     }
 
-    @JsonProperty("_embedded")
+    @JsonProperty(ApiFieldConstants.EMBEDDED)
     private void setEmbedded(JsonNode embedded) {
-        if (embedded != null && embedded.has("venues")) {
-            JsonNode venuesNode = embedded.get("venues");
+        if (embedded != null && embedded.has(ApiFieldConstants.VENUES)) {
+            JsonNode venuesNode = embedded.get(ApiFieldConstants.VENUES);
             if (venuesNode.isArray() && venuesNode.size() > 0) {
                 JsonNode venueNode = venuesNode.get(0);
                 this.venue = new Venue();
-                this.venue.setId(venueNode.get("id").asText());
-                this.venue.setName(venueNode.get("name").asText());
-                if (venueNode.has("city")) {
-                    this.venue.setCity(venueNode.get("city").get("name").asText());
+                this.venue.setId(venueNode.get(ApiFieldConstants.ID).asText());
+                this.venue.setName(venueNode.get(ApiFieldConstants.NAME).asText());
+                if (venueNode.has(ApiFieldConstants.CITY)) {
+                    this.venue.setCity(venueNode.get(ApiFieldConstants.CITY).get(ApiFieldConstants.NAME).asText());
                 }
-                if (venueNode.has("state")) {
-                    this.venue.setState(venueNode.get("state").get("stateCode").asText());
+                if (venueNode.has(ApiFieldConstants.STATE)) {
+                    this.venue.setState(venueNode.get(ApiFieldConstants.STATE).get(ApiFieldConstants.STATE_CODE).asText());
                 }
-                if (venueNode.has("country")) {
-                    this.venue.setCountry(venueNode.get("country").get("name").asText());
+                if (venueNode.has(ApiFieldConstants.COUNTRY)) {
+                    this.venue.setCountry(venueNode.get(ApiFieldConstants.COUNTRY).get(ApiFieldConstants.NAME).asText());
                 }
             }
         }
@@ -74,13 +70,12 @@ public class Event {
 
     public Event() {}
 
-    public Event(String id, String name, String type, LocalDate date, LocalTime time,
+    public Event(String id, String name, String type, LocalDate date,
                  String url, Classification classification, Venue venue) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.date = date;
-        this.time = time;
         this.url = url;
         this.classification = classification;
         this.venue = venue;
@@ -116,14 +111,6 @@ public class Event {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
     }
 
     public String getUrl() {

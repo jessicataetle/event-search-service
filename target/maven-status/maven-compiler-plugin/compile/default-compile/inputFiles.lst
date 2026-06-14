@@ -9,5 +9,6 @@
 /workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/model/Venue.java
 /workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/model/Classification.java
 /workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/EventDiscoveryApplication.java
+/workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/constant/ApiFieldConstants.java
 /workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/exception/EventNotFoundException.java
 /workspaces/seat-reservation-service/src/main/java/com/ticketmaster/eventdiscovery/repository/EventRepository.java
