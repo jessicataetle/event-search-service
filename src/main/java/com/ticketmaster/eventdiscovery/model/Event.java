@@ -1,11 +1,8 @@
 package com.ticketmaster.eventdiscovery.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
@@ -17,8 +14,6 @@ public class Event {
     private String url;
     private Classification classification;
     private Venue venue;
-
-    private Map<String, Object> rawData = new HashMap<>();
 
     public Event() {}
 
@@ -96,14 +91,5 @@ public class Event {
 
     public void setVenue(Venue venue) {
         this.venue = venue;
-    }
-
-    @JsonAnySetter
-    public void handleUnknownField(String name, Object value) {
-        rawData.put(name, value);
-    }
-
-    public Map<String, Object> getRawData() {
-        return rawData;
     }
 }
