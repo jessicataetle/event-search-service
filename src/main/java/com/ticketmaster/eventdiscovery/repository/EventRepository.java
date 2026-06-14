@@ -1,9 +1,11 @@
 package com.ticketmaster.eventdiscovery.repository;
 
 import com.ticketmaster.eventdiscovery.model.Event;
+import com.ticketmaster.eventdiscovery.exception.EventNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -33,6 +35,8 @@ public class EventRepository {
         try {
             String response = restTemplate.getForObject(url, String.class);
             return objectMapper.readValue(response, Event.class);
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new EventNotFoundException("Event not found with ID: " + eventId);
         } catch (Exception e) {
             throw new RuntimeException("Error fetching event by ID: " + eventId, e);
         }
