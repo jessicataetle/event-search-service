@@ -70,10 +70,12 @@ public class EventRepository {
         String url = builder.toUriString();
 
         try {
+            logger.info("Searching events with URL: {}", url);
             String response = restTemplate.getForObject(url, String.class);
             return parseEventsFromResponse(response);
         } catch (Exception e) {
-            throw new RuntimeException("Error searching events", e);
+            logger.error("Error searching events", e);
+            throw new RuntimeException("Error searching events: " + e.getMessage(), e);
         }
     }
 
