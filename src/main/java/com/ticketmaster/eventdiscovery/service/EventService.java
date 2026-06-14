@@ -26,19 +26,26 @@ public class EventService {
     public List<Event> findSimilarEvents(String eventId) {
         Event sourceEvent = eventRepository.findEventById(eventId);
 
-        String genre = sourceEvent.getClassification() != null &&
-                sourceEvent.getClassification().getGenre() != null
-                ? sourceEvent.getClassification().getGenre().getId()
-                : null;
+        String genre = null;
+        String subGenre = null;
+        String location = null;
 
-        String subGenre = sourceEvent.getClassification() != null &&
-                sourceEvent.getClassification().getSubGenre() != null
-                ? sourceEvent.getClassification().getSubGenre().getId()
-                : null;
+        if (sourceEvent.getClassification() != null) {
+            if (sourceEvent.getClassification().getGenre() != null) {
+                genre = sourceEvent.getClassification().getGenre().getId();
+            }
+            if (sourceEvent.getClassification().getSubGenre() != null) {
+                subGenre = sourceEvent.getClassification().getSubGenre().getId();
+            }
+        }
 
-        String location = sourceEvent.getVenue() != null
-                ? sourceEvent.getVenue().getCity()
-                : null;
+        if (sourceEvent.getVenue() != null && sourceEvent.getVenue().getCity() != null) {
+            location = sourceEvent.getVenue().getCity();
+        }
+
+        if (genre == null && location == null) {
+            return new java.util.ArrayList<>();
+        }
 
         List<Event> similarEvents = eventRepository.searchEvents(null, location, genre, subGenre, 0, 20);
 
@@ -52,6 +59,10 @@ public class EventService {
                             !event.getDate().isBefore(startDate) &&
                             !event.getDate().isAfter(endDate) &&
                             !event.getId().equals(eventId))
+                    .collect(Collectors.toList());
+        } else {
+            similarEvents = similarEvents.stream()
+                    .filter(event -> !event.getId().equals(eventId))
                     .collect(Collectors.toList());
         }
 

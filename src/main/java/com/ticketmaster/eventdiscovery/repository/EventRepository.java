@@ -10,11 +10,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class EventRepository {
+    private static final Logger logger = LoggerFactory.getLogger(EventRepository.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -62,6 +65,7 @@ public class EventRepository {
 
         builder.queryParam("page", page);
         builder.queryParam("size", size);
+
 
         String url = builder.toUriString();
 
