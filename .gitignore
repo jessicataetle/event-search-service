@@ -1,0 +1,16 @@
+# Build and IDE
+target/
+*.class
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Application properties with secrets
+src/main/resources/application.properties
+!src/main/resources/application.properties.example
+
+# Maven
+*.jar
+*.war
+*.ear
