@@ -24,10 +24,11 @@ git clone https://github.com/jessicataetle/event-search-service.git
 cd event-search-service
 ```
 
-2. Configure your API key in `src/main/resources/application.properties`:
-```properties
-ticketmaster.api.key=YOUR_API_KEY_HERE
+2. Copy the configuration template and add your API key:
+```bash
+cp src/main/resources/application.properties.example src/main/resources/application.properties
 ```
+Then edit `application.properties` and replace `YOUR_API_KEY_HERE` with your actual Ticketmaster API key from https://developer.ticketmaster.com
 
 3. Build the project:
 ```bash
