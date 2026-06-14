@@ -64,8 +64,8 @@ Searches for events with optional filters and pagination.
 **Query Parameters:**
 - `keyword` (optional) — Event name or keyword
 - `location` (optional) — City name
-- `genre` (optional) — Genre ID
-- `subGenre` (optional) — SubGenre ID
+- `genre` (optional) — Classification ID (genre)
+- `subGenre` (optional) — Classification ID (sub-genre)
 - `page` (optional, default: 0) — Page number for pagination
 - `size` (optional, default: 20) — Number of results per page
 

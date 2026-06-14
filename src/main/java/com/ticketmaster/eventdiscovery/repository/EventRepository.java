@@ -54,10 +54,10 @@ public class EventRepository {
             builder.queryParam("city", location);
         }
         if (genre != null && !genre.isEmpty()) {
-            builder.queryParam("genreId", genre);
+            builder.queryParam("classificationId", genre);
         }
         if (subGenre != null && !subGenre.isEmpty()) {
-            builder.queryParam("subGenreId", subGenre);
+            builder.queryParam("classificationId", subGenre);
         }
 
         builder.queryParam("page", page);
