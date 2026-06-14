@@ -1,6 +1,8 @@
 package com.ticketmaster.eventdiscovery.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,6 +16,61 @@ public class Event {
     private String url;
     private Classification classification;
     private Venue venue;
+
+    @JsonProperty("dates")
+    private void setDates(JsonNode dates) {
+        if (dates != null && dates.has("start")) {
+            JsonNode start = dates.get("start");
+            if (start.has("localDate")) {
+                this.date = LocalDate.parse(start.get("localDate").asText());
+            }
+            if (start.has("localTime")) {
+                this.time = LocalTime.parse(start.get("localTime").asText());
+            }
+        }
+    }
+
+    @JsonProperty("classifications")
+    private void setClassifications(JsonNode[] classifications) {
+        if (classifications != null && classifications.length > 0) {
+            this.classification = new Classification();
+            JsonNode firstClassification = classifications[0];
+            if (firstClassification.has("genre")) {
+                Genre genre = new Genre();
+                genre.setId(firstClassification.get("genre").get("id").asText());
+                genre.setName(firstClassification.get("genre").get("name").asText());
+                this.classification.setGenre(genre);
+            }
+            if (firstClassification.has("subGenre")) {
+                SubGenre subGenre = new SubGenre();
+                subGenre.setId(firstClassification.get("subGenre").get("id").asText());
+                subGenre.setName(firstClassification.get("subGenre").get("name").asText());
+                this.classification.setSubGenre(subGenre);
+            }
+        }
+    }
+
+    @JsonProperty("_embedded")
+    private void setEmbedded(JsonNode embedded) {
+        if (embedded != null && embedded.has("venues")) {
+            JsonNode venuesNode = embedded.get("venues");
+            if (venuesNode.isArray() && venuesNode.size() > 0) {
+                JsonNode venueNode = venuesNode.get(0);
+                this.venue = new Venue();
+                this.venue.setId(venueNode.get("id").asText());
+                this.venue.setName(venueNode.get("name").asText());
+                if (venueNode.has("city")) {
+                    this.venue.setCity(venueNode.get("city").get("name").asText());
+                }
+                if (venueNode.has("state")) {
+                    this.venue.setState(venueNode.get("state").get("stateCode").asText());
+                }
+                if (venueNode.has("country")) {
+                    this.venue.setCountry(venueNode.get("country").get("name").asText());
+                }
+            }
+        }
+    }
 
     public Event() {}
 
