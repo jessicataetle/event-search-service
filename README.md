@@ -42,6 +42,23 @@ mvn spring-boot:run
 
 The application will start on `http://localhost:8080`
 
+## Testing with Postman
+
+A Postman collection is included with pre-built requests:
+
+1. Open Postman
+2. Click **Import** → **Upload Files**
+3. Select `postman-collection.json`
+4. All endpoints are ready to use with sample parameters
+
+**Included requests:**
+- Search by keyword (Eagles)
+- Search by location (Las Vegas)
+- Search by keyword and location
+- Get event by ID
+- Get similar events
+- Search with all parameters
+
 ## API Endpoints
 
 ### Get Event Details

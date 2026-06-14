@@ -1,0 +1,182 @@
+{
+  "info": {
+    "name": "Event Discovery Service",
+    "description": "Ticketmaster Event Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events?keyword=Eagles&page=0&size=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events"],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "Eagles"
+            },
+            {
+              "key": "location",
+              "value": "Las Vegas",
+              "disabled": true
+            },
+            {
+              "key": "genre",
+              "value": "KZFzniwnSyZfZ7v7nJ",
+              "disabled": true
+            },
+            {
+              "key": "subGenre",
+              "value": "KZazBEonSMnZaz7vFJ",
+              "disabled": true
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search by Location",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events?location=Las Vegas&page=0&size=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events"],
+          "query": [
+            {
+              "key": "location",
+              "value": "Las Vegas"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search by Keyword and Location",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events?keyword=concert&location=New York&page=0&size=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events"],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "concert"
+            },
+            {
+              "key": "location",
+              "value": "New York"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Event by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events/1700649D8707EA93",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events", "1700649D8707EA93"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Similar Events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events/1700649D8707EA93/similar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events", "1700649D8707EA93", "similar"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search - All Parameters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/events?keyword=Eagles&location=Las Vegas&genre=KZFzniwnSyZfZ7v7nJ&page=0&size=5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["events"],
+          "query": [
+            {
+              "key": "keyword",
+              "value": "Eagles"
+            },
+            {
+              "key": "location",
+              "value": "Las Vegas"
+            },
+            {
+              "key": "genre",
+              "value": "KZFzniwnSyZfZ7v7nJ"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
