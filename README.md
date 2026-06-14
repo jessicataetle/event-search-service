@@ -20,8 +20,8 @@ A Spring Boot application for searching and discovering events using the Ticketm
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd seat-reservation-service
+git clone https://github.com/jessicataetle/event-search-service.git
+cd event-search-service
 ```
 
 2. Configure your API key in `src/main/resources/application.properties`:
@@ -98,6 +98,9 @@ src/main/java/com/ticketmaster/eventdiscovery/
 │   └── EventService.java               # Business logic
 ├── repository/
 │   └── EventRepository.java            # Ticketmaster API client
+├── exception/
+│   ├── EventNotFoundException.java      # Custom 404 exception
+│   └── GlobalExceptionHandler.java      # Centralized error handling
 └── model/
     ├── Event.java                      # Event entity
     ├── Classification.java             # Event classification
@@ -116,6 +119,24 @@ The application follows a layered architecture pattern:
 3. **Repository Layer** — Manages API communication with Ticketmaster Discovery API
 4. **Model Layer** — Data classes representing API responses
 
+## Error Handling
+
+The application includes centralized error handling via `GlobalExceptionHandler`:
+
+- **404 Not Found** — Returned when an event is not found in the Ticketmaster API
+- **500 Internal Server Error** — Returned for unexpected server-side errors
+- All error responses include timestamp, status code, error type, and message
+
+**Example Error Response:**
+```json
+{
+  "timestamp": "2024-01-15T10:30:45.123456",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Event not found with ID: invalid-id"
+}
+```
+
 ## Configuration
 
 Configuration is managed via `application.properties`:
@@ -126,6 +147,8 @@ server.port=8080
 ticketmaster.api.key=YOUR_API_KEY_HERE
 ticketmaster.api.baseurl=https://app.ticketmaster.com/discovery/v2
 ```
+
+The API key is required for all requests to the Ticketmaster Discovery API.
 
 ## Technologies
 
